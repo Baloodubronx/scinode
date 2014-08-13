@@ -9,7 +9,7 @@ http.get('http://www.ebi.ac.uk/europepmc/webservices/rest/search/query=autebert&
 
         response.on('end', function () {
                 var json=JSON.parse(str);
-                console.log(json);
+                console.log(json.resultList.result[0]);
               
         });
         
