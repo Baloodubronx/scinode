@@ -16,7 +16,8 @@ var journals = require('../journals');
 // Creates a new thing in the DB.
 exports.create = function(articles) {
     articles.forEach(function(item){
-      journals.create(item.journalInfo.journal);
+            if (item.journalInfo!=null) {
+              journals.create(item.journalInfo.journal); }
       /*Article.findOne({'pmid': item.pmid}, function(err, article){
         if (err) return done(err);
         if (article) {

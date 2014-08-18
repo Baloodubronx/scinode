@@ -9,9 +9,10 @@ var journalSchema = mongoose.Schema({
   essn : String,
   issn : String,
   isoabbreviation : String,
-  nlmid: String 
+  nlmid: {type:String, index: { unique: true, dropDups: true }}
 } , { strict: false });
 
 // methods ======================
+mongoose.set('debug', true);
 
 module.exports = mongoose.model('Journal', journalSchema);

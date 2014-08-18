@@ -12,6 +12,8 @@
 var _ = require('lodash');
 var Journal = require('./journals.model');
 
+
+
 // Creates a new thing in the DB.
 exports.create = function(journal) {
   
@@ -28,3 +30,8 @@ exports.create = function(journal) {
     }
   });
 };
+
+exports.clean = function() {
+  
+}
+
