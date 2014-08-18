@@ -1,24 +1,9 @@
 var http=require('http');
-var str = '';
-var number=1;
+var mongoose = require('mongoose');
 
-getPMID = function() {
-	var link = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search/format=json&resulttype=core';
-	str='';
-	link += '&query=PUB_YEAR:2013&page='+number;
-	http.get(link, function(response) {
-        response.on('data', function (chunk) {
-              str += chunk;
-        });
-        response.on('end', function () {
-                var json=JSON.parse(str);
-                console.log(number);
-                number++;
-                if (number < 10) {
-                	getPMID();
-                }
-        });
-    });
-};
+var config = require('./config');
+var pubmed = require('./functions/pubmed');
 
-getPMID();
+mongoose.connect(config.mongo.uri, config.mongo.options);
+
+pubmed.getPMIDs(process.env.YEAR || 2013,process.env.PAGE || 1);
