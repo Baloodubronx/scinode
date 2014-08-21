@@ -20,33 +20,21 @@ ABSTRACT:malaria, ABSTRACT:”chicken pox”
 
 
 *PUB_YEAR:*
-Search by year of publication in YYYY 
-format; note syntax for range 
-searching.
-PUB_YEAR:2000, 
-PUB_YEAR:[2000 TO 2001]
-AUTH: Search for a surname and (optionally) 
-initial(s) in publication author lists
-AUTH:einstein, AUTH:”Smith 
-AB”
-INVESTIGATOR: Search for a publication by specifying 
-an investigator INVESTIGATOR:”Orlandini F”
-AUTHORID_TYPE: List publications that are associated 
-with an ORCID AUTHORID_TYPE:ORCID
-AUTHORID: List all the publications associated with 
-a specified ORCID
-AUTHORID:"0000-0002-1767-
-9318"
-AFF: Search for a term or terms in the 
-author affiliation field
-AFF:ebi, AFF:”university of 
-cambridge”
-JOURNAL: Journal title – searchable either in full 
-or abbreviated form
-JOURNAL:”biology letters”, 
-JOURNAL:”biol lett”
-ISSN:
-Search for a journal by its ISSN; see the 
-NCBI’s list of journals and ISSNs in 
-PubMed
-ISSN:0028-0836
+Search by year of publication in YYYY format; note syntax for range searching.  
+PUB_YEAR:2000, PUB_YEAR:[2000 TO 2001]  
+
+*AUTH:*  
+Search for a surname and (optionally) initial(s) in publication author lists  
+AUTH:einstein, AUTH:”Smith AB”  
+
+*AFF:*  
+Search for a term or terms in the author affiliation field
+AFF:ebi, AFF:”university of cambridge”  
+
+*JOURNAL:*  
+Journal title – searchable either in full or abbreviated form  
+JOURNAL:”biology letters”, JOURNAL:”biol lett”  
+
+*ISSN:*  
+Search for a journal by its ISSN; see the NCBI’s list of journals and ISSNs in PubMed  
+ISSN:0028-0836  
