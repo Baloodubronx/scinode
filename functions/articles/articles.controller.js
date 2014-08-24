@@ -18,7 +18,7 @@ exports.create = function(articles) {
     articles.forEach(function(item){
             if (item.journalInfo!=null) {
               journals.create(item.journalInfo.journal); }
-      /*Article.findOne({'pmid': item.pmid}, function(err, article){
+      Article.findOne({'pmid': item.pmid}, function(err, article){
         if (err) return done(err);
         if (article) {
           
@@ -27,7 +27,7 @@ exports.create = function(articles) {
           var newArticle  = new Article(item);
           newArticle.save();
         }
-      });*/
+      });
 
     });
 };

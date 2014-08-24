@@ -24,14 +24,13 @@ exports.create = function(journal) {
     else {
       var newJournal  = new Journal(journal);
       newJournal.save();
-      Journal.find().count(function(err, count){
-        console.log(count + ' journals in DB');
-      });
     }
   });
 };
 
 exports.clean = function() {
-  
+  Journal.find({}, function(journals){
+    Journal.find({'nlmid':journal.nlmid})
+  });
 }
 

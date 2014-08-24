@@ -13,6 +13,6 @@ var journalSchema = mongoose.Schema({
 } , { strict: false });
 
 // methods ======================
-mongoose.set('debug', true);
+//mongoose.set('debug', true);
 
 module.exports = mongoose.model('Journal', journalSchema);

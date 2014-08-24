@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 // define the schema for our user model
 var articleSchema = mongoose.Schema({
-  pmid            : Number,
+  pmid  : { type: Number , index: { unique: true, dropDups: true }},
   title           : String,
   journal         : String,
   journalName: String,
