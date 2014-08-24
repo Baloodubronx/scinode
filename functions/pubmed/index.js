@@ -2,7 +2,7 @@ http=require('http');
 
 articles=require('../articles');
 var Journal = require('../journals/journals.model');
-var Article = require('../articles/artciles.model');
+var Article = require('../articles/articles.model');
 
 
 function getPMIDs(year, page) {
