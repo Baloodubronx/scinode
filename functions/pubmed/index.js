@@ -26,6 +26,10 @@ function getPMIDs(year, page) {
       		});
 			getPMIDs(year, ++page);
 		});
+		response.on('error', function (err) {
+    		console.log(err);
+    		getPMIDs(year, page);
+		});
 	});
 }
 
