@@ -10,7 +10,7 @@ function getPMIDs(year, page) {
 	str='';
 	link += '&query=PUB_YEAR:'+year+'&page='+page;
 	console.log(link);
-	http.get(link, function(response) {
+	var getRequest = http.get(link, function(response) {
 		response.on('data', function (chunk) {
 			str += chunk;
 		});
@@ -26,11 +26,13 @@ function getPMIDs(year, page) {
       		});
 			getPMIDs(year, ++page);
 		});
-		response.on('error', function (err) {
+		
+	});
+
+	getRequest.on('error', function (err) {
     		console.log(err);
     		getPMIDs(year, page);
 		});
-	});
 }
 
 exports.getPMIDs = getPMIDs;
