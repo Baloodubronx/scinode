@@ -8,7 +8,7 @@ var Article = require('../articles/articles.model');
 exports.authorCount = function () {
 	var authors = [];
 	var counts = [];
-	var q=Article.find().limit(10000);
+	var q=Article.find().limit(process.env.MAX || 10000);
 	console.time('authorCount');
 
 	q.exec(function(err, articles){
