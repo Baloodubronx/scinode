@@ -4,6 +4,8 @@ articles=require('../articles');
 var Journal = require('../journals/journals.model');
 var Article = require('../articles/articles.model');
 
+var Citation = require('../citations/citations.model');
+
 
 exports.authorCount = function () {
 	var authors = [];
@@ -24,7 +26,7 @@ exports.authorCount = function () {
 					counts.push(1);	
 				}
 			});
-		console.log(article);
+		//console.log(article);
 		});
 		
 		for (var i=0; i<counts.length; i++) {
@@ -38,42 +40,78 @@ exports.authorCount = function () {
 	});
 }
 
+
+exports.getMostCited = function() {
+	var q = Citation.find().sort({'citedBy':-1}).limit(5);
+	q.exec(function(err, citations){
+		if (err) {
+			console.log(err);
+		}
+		if (citations) {
+			citations.forEach(function(citation){
+				Journal.findOne({nlmid:citation.nlmid}, function(err, journal) {
+					if (journal) console.log(journal.title+ ' : '+citation.citedBy);
+				});
+			});
+		}
+		
+	});
+}
+
 exports.citedCount = function() {
-	var journals = [];
-	var counts = [];
-	var q=Article.find().limit(process.env.MAX || 100);
+	Article.findOne({'processed':false} , function(err, article){
+		if (!article) {
+			console.log('no article');
+			process.exit(code=1);
+		}
+		var journalNLMID = article.journalInfo.journal.nlmid;
+		var citedCount = article.citedByCount;
 
-	console.time('citedCount');
 
-	q.exec(function(err, articles){
-		articles.forEach(function(article){
-			var journalName = article.journalInfo.journal.isoabbreviation;
-			var citedCount = article.citedByCount;
-
-			var theindex=journals.indexOf(journalName);
-			if (theindex>0) {
-				counts[theindex]+=1;
+		Citation.findOne({'nlmid':journalNLMID}, function(err, citation){
+			if (err) {
+				console.log(err);
+			}
+			if (citation) {
+				citation.citedBy = citation.citedBy + citedCount;
+				citation.save();
+					article.processed=true;
+					article.save(function(){
+						exports.citedCount();
+					});
 			}
 			else {
-				journals.push(journalName);
-				counts.push(citedCount);	
+				console.log('Did not found the journal!');
+				var newCitation = new Citation();
+				newCitation.nlmid = journalNLMID;
+				newCitation.citedBy = citedCount;
+				newCitation.save(function(err){
+					article.processed=true;
+					article.save(function(){
+						exports.citedCount();
+					});
+					
+				});
 			}
+
+			
+
 		});
 
-		/*for (var i=0; i<counts.length; i++) {
-			if (counts[i]>2) {
-				console.log(journals[i] + ' : ' + counts[i]);
-			}
-		}*/
-
-		var i = counts.indexOf(Math.max.apply(Math, counts));
-
-		console.log(journals[i] + ' : ' + counts[i]);
-
-		console.timeEnd('citedCount');
-		process.exit(code=0);
 
 	});
+}
+
+exports.cleanArticles = function() {
+	console.time('cleanArticles');
+
+	var q=Article.update({},{$set: {processed: false}}, {upsert: true, "new": false, multi:true});
+	
+	q.exec(function(err, article){
+		console.timeEnd('cleanArticles');
+		process.exit(code=0);
+	});
+	
 }
 
 

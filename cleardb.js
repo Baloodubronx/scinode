@@ -6,7 +6,4 @@ var scanner = require('./functions/scanner');
 
 mongoose.connect('mongodb://localhost/scrapper');
 
-//scanner.authorCount();
-
-
-scanner.citedCount();
+scanner.cleanArticles();
