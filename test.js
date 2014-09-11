@@ -9,4 +9,4 @@ mongoose.connect('mongodb://localhost/scrapper');
 //scanner.authorCount();
 
 
-scanner.citedCount();
+scanner.citedCount(0);

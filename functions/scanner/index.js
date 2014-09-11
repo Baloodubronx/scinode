@@ -58,7 +58,7 @@ exports.getMostCited = function() {
 	});
 }
 
-exports.citedCount = function() {
+exports.citedCount = function(nb) {
 	Article.findOne({'processed':false} , function(err, article){
 		if (!article) {
 			console.log('no article');
@@ -77,18 +77,21 @@ exports.citedCount = function() {
 				citation.save();
 					article.processed=true;
 					article.save(function(){
-						exports.citedCount();
+						nb++;
+						console.log('Done: '+article.pmid + ' - ' +nb);
+						exports.citedCount(nb);
 					});
 			}
 			else {
-				console.log('Did not found the journal!');
 				var newCitation = new Citation();
 				newCitation.nlmid = journalNLMID;
 				newCitation.citedBy = citedCount;
 				newCitation.save(function(err){
 					article.processed=true;
 					article.save(function(){
-						exports.citedCount();
+						nb++;
+						console.log('Done: '+article.pmid  + ' - ' +nb);
+						exports.citedCount(nb);
 					});
 					
 				});
@@ -108,9 +111,14 @@ exports.cleanArticles = function() {
 	var q=Article.update({},{$set: {processed: false}}, {upsert: true, "new": false, multi:true});
 	
 	q.exec(function(err, article){
+		Citation.remove({},function(){
 		console.timeEnd('cleanArticles');
 		process.exit(code=0);
+		});
+		
 	});
+
+
 	
 }
 
