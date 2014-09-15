@@ -42,7 +42,7 @@ exports.authorCount = function () {
 
 
 exports.getMostCited = function() {
-	var q = Citation.find().sort({'citedBy':-1}).limit(5);
+	var q = Citation.find().sort({'citedBy':-1}).limit(20);
 	q.exec(function(err, citations){
 		if (err) {
 			console.log(err);
