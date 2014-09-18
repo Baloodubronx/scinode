@@ -23,8 +23,8 @@ ARTICLE
     {  
       id: '24625080',  
       pmid: '24625080',  
-      title: 'Hierarchical hydrodynamic flow confinement: efficient use and retrieval of chemicals for microscale chemistry on surfaces.',  
-      authorString: 'Autebert J, Kashyap A, Lovchik RD, Delamarche E, Kaigala GV.',  
+      title: 'Hierarchical ...',  
+      authorString: 'Autebert J, ...',  
       authorList: { author: [ [Object], [Object], [Object], [Object], [Object] ] }, 
       
       journalInfo:
