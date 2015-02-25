@@ -15,7 +15,7 @@ exports.makelist = function () {
 		}
 		var str = article.abstractText + ' ' + article.title;
 		var temparray1 = str.toLowerCase().match(/\w+/g);
-		var temparray3 = str.toLowerCase().match(/\w+\s\w+/g);
+		var temparray2 = str.toLowerCase().match(/\w+\s\w+/g);
 		var temparray3 = str.toLowerCase().match(/\w+\s\w+\s\w+/g);
 
 		var finalarray = temparray1.concat(temparray2).concat(temparray3);
