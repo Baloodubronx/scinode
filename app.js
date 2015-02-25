@@ -6,4 +6,4 @@ var pubmed = require('./functions/pubmed');
 
 mongoose.connect('mongodb://localhost/scrapper');
 
-pubmed.getPMIDs(process.env.YEAR || 2013,process.env.PAGE || 1);
+pubmed.getPMIDs(process.env.YEAR || 2014, process.env.PAGE || 1);
