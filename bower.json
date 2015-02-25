@@ -1,0 +1,9 @@
+{
+  "name": "scikr",
+  "version": "0.1.0",
+  "dependencies": {
+    "angular": "*",
+    "lodash": "*",
+    "angular-ui-router": "*"
+  }
+}

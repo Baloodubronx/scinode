@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="scinodeApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/">
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="app/app.css">
+    <!-- endinject -->
+  </head>
+  <body>
+    <div class="max-height no-overflow" ui-view=""></div>
+
+
+    <!-- inject:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/templates.js"></script>
+    <script src="app/home/home.controller.js"></script>
+    <script src="app/home/home.js"></script>
+    <!-- endinject -->
+</body>
+</html>

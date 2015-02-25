@@ -24,21 +24,28 @@ exports.makelist = function () {
 		async.each(finalarray,
 		  function(term, callback){
 				if (term==='') callback();
-		    Keyword.findOne({'keyword':term}, function(err, keyword){
-		    	if (keyword) {
-		    		keyword.count += 1;
-		    		keyword.save(function(){
-		    			callback();
-		    		});
 
-		    	}
-		    	else {
-		    		var newKey = new Keyword({keyword:term, count:1});
-		    		newKey.save(function(){
-		    			callback();
-		    		});
-		    	}
-		    });
+				Blacklist.findOne({'keyword':term}, function(err, bl) {
+					if (err || bl) {callback();}
+					else {
+						Keyword.findOne({'keyword':term}, function(err, keyword){
+				    	if (keyword) {
+				    		keyword.count += 1;
+				    		keyword.save(function(){
+				    			callback();
+				    		});
+
+				    	}
+				    	else {
+				    		var newKey = new Keyword({keyword:term, count:1});
+				    		newKey.save(function(){
+				    			callback();
+				    		});
+				    	}
+				    });
+					}
+				});
+
 		  },
 
 		  function(err){
