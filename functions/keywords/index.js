@@ -23,7 +23,6 @@ exports.makelist = function () {
 
 		async.each(finalarray,
 		  function(term, callback){
-				console.log(term);
 				if (term==='') callback();
 		    Keyword.findOne({'keyword':term}, function(err, keyword){
 		    	if (keyword) {
