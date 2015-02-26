@@ -6,8 +6,8 @@ angular.module('scinodeApp')
 
   $scope.reload = function() {
     $scope.getKeywords();
-    $scope.getBlacklist();
-    $scope.getWhitelist();
+    //$scope.getBlacklist();
+    //$scope.getWhitelist();
   };
 
   $scope.getKeywords = function() {

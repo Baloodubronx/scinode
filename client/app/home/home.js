@@ -7,5 +7,10 @@ angular.module('scinodeApp')
         url: '/',
         templateUrl: 'app/home/home.html',
         controller: 'HomeCtrl'
+      })
+      .state('blacklist', {
+        url: '/bl',
+        templateUrl: 'app/home/bl.html',
+        controller: 'HomeCtrl'
       });
   });
