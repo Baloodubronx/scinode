@@ -1,6 +1,6 @@
 .first
   h1
-    | Keywords
+    | Keywords {{keywords.length}}
   p(ng-repeat='keyword in keywords')
     a(href="", ng-click="remove(keyword.keyword)")
       | {{keyword.keyword}} : {{keyword.count}}
@@ -9,14 +9,14 @@
       | OK
 .second
   h1
-    | Blacklist
+    | Blacklist {{blacklist.length}}
   p(ng-repeat='keyword in blacklist')
     a(href="", ng-click="remove(keyword.keyword)")
       | {{keyword.keyword}}
   
 .third
   h1
-    | Whitelist
+    | Whitelist {{whitelist.length}}
   p(ng-repeat='keyword in whitelist')
     a(href="" ng-click="")
       | {{keyword.keyword}} : {{keyword.count}}

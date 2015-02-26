@@ -1,13 +1,13 @@
 
 <div class="first">
-  <h1>Keywords</h1>
+  <h1>Keywords {{keywords.length}}</h1>
   <p ng-repeat="keyword in keywords"><a href="" ng-click="remove(keyword.keyword)">{{keyword.keyword}} : {{keyword.count}}</a> -------- <a href="" ng-click="setWhitelist(keyword.keyword)">OK</a></p>
 </div>
 <div class="second">
-  <h1>Blacklist</h1>
+  <h1>Blacklist {{blacklist.length}}</h1>
   <p ng-repeat="keyword in blacklist"><a href="" ng-click="remove(keyword.keyword)">{{keyword.keyword}}</a></p>
 </div>
 <div class="third">
-  <h1>Whitelist</h1>
+  <h1>Whitelist {{whitelist.length}}</h1>
   <p ng-repeat="keyword in whitelist"><a href="" ng-click="">{{keyword.keyword}} : {{keyword.count}}</a></p>
 </div>
