@@ -10,6 +10,7 @@ module.exports = function(app) {
   // Insert routes below
   app.use('/api/keywords', require('./api/keywords'));
   app.use('/api/blacklist', require('./api/blacklist'));
+  app.use('/api/whitelist', require('./api/whitelist'));
 
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
    .get();

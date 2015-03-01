@@ -6,8 +6,8 @@ angular.module('scinodeApp')
 
   $scope.reload = function() {
     $scope.getKeywords();
-    //$scope.getBlacklist();
-    //$scope.getWhitelist();
+    $scope.getBlacklist();
+    $scope.getWhitelist();
   };
 
   $scope.getKeywords = function() {
@@ -23,14 +23,14 @@ angular.module('scinodeApp')
   };
 
   $scope.getWhitelist = function() {
-    $http.get('api/keywords/whitelist').success(function(data){
+    $http.get('api/whitelist').success(function(data){
       $scope.whitelist = data;
     });
   };
 
 
-  $scope.setWhitelist = function(keyword) {
-    $http.post('api/keywords/whitelist', {keyword:keyword}).success(function(){
+  $scope.setWhitelist = function(keyword, count) {
+    $http.post('api/whitelist', {keyword:keyword, count:count}).success(function(){
       $scope.reload();
     });
   };

@@ -1,10 +1,10 @@
 'use strict';
 
-var Keyword = require('./keywords.model');
+var Keyword = require('../../../models/keywords.model');
 
 
 exports.index = function(req, res) {
-  Keyword.find({white:false}).sort({'count':-1}).limit(20).exec(function(err, keywords) {
+  Keyword.find().sort({'count':-1}).limit(20).exec(function(err, keywords) {
     if(err) return res.status(400).end();
     res.status(200).json(keywords);
   });

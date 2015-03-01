@@ -1,17 +1,17 @@
 'use strict';
 
-var Blacklist = require('../../../models/blacklist.model');
+var Whitelist = require('../../../models/whitelist.model');
 var Keyword = require('../../../models/keywords.model');
 
 
 exports.create = function(req, res) {
   if (!req._body) return res.status(400).end();
 
-  var newBL = new Blacklist();
-  newBL.keyword = req.body.keyword;
-  newBL.save(function(err) {
+  var newWL = new Whitelist();
+  newWL.keyword = req.body.keyword;
+  newWL.count=req.body.count;
+  newWL.save(function(err) {
     if (err) return res.status(400).end();
-
     Keyword.findOneAndRemove({keyword:req.body.keyword}, function(err) {
       res.status(200).end();
     });
@@ -19,7 +19,7 @@ exports.create = function(req, res) {
 };
 
 exports.index = function(req, res) {
-  Blacklist.find(function(err, bl) {
+  Whitelist.find(function(err, bl) {
     res.status(200).json(bl);
   });
 }

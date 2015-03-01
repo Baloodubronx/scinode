@@ -28,3 +28,4 @@ client/app/templates.js
 client/app/app.css
 
 scrapper/data
+bower_components

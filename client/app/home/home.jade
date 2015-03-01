@@ -5,7 +5,7 @@
     a(href="", ng-click="remove(keyword.keyword)")
       | {{keyword.keyword}} : {{keyword.count}}
     |  -------- 
-    a(href='', ng-click="setWhitelist(keyword.keyword)")
+    a.pull-right(href='', ng-click="setWhitelist(keyword.keyword, keyword.count)")
       | OK
 .second
   h1

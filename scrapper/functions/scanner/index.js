@@ -3,7 +3,6 @@ http=require('http');
 articles=require('../articles');
 var Journal = require('../journals/journals.model');
 var Article = require('../articles/articles.model');
-
 var Citation = require('../citations/citations.model');
 
 
@@ -23,12 +22,12 @@ exports.authorCount = function () {
 				}
 				else {
 					authors.push(fullname);
-					counts.push(1);	
+					counts.push(1);
 				}
 			});
 		//console.log(article);
 		});
-		
+
 		for (var i=0; i<counts.length; i++) {
 			if (counts[i]>2) {
 				//console.log(authors[i]);
@@ -54,7 +53,7 @@ exports.getMostCited = function() {
 				});
 			});
 		}
-		
+
 	});
 }
 
@@ -93,11 +92,11 @@ exports.citedCount = function(nb) {
 						console.log('Done: '+article.pmid  + ' - ' +nb);
 						exports.citedCount(nb);
 					});
-					
+
 				});
 			}
 
-			
+
 
 		});
 
@@ -109,21 +108,15 @@ exports.cleanArticles = function() {
 	console.time('cleanArticles');
 
 	var q=Article.update({},{$set: {processed: false}}, {upsert: true, "new": false, multi:true});
-	
+
 	q.exec(function(err, article){
 		Citation.remove({},function(){
 		console.timeEnd('cleanArticles');
 		process.exit(code=0);
 		});
-		
+
 	});
 
 
-	
+
 }
-
-
-
-
-
-
