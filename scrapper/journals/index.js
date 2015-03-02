@@ -27,15 +27,15 @@ exports.clean = function() {
 
 
 
-exports.makeJournalList = function() {
-  var query = Article.findOne({'processedJournal':false}, function(err, article){
+exports.makeJournalList = function(year) {
+  var query = Article.findOne({'processedJournal':false, 'journalInfo.yearOfPublication':year}, function(err, article){
     if (!article) {
-			console.log('no more unprocessed articles FOR JOURNALS');
+			console.log('no more unprocessed articles FOR JOURNALS (year: '+year+')');
 			process.exit(code=1);
 		}
-    if (Math.floor(Math.random()*10)>8){
-      Article.find({'processedJournal':false}).count(function(err, count) {
-        console.log(count);
+    if (Math.floor(Math.random()*100)>95){
+      Article.find({'processedJournal':false, 'journalInfo.yearOfPublication':year}).count(function(err, count) {
+        console.log(count+' more to do in '+year);
       });
     }
     var count = 0;
@@ -45,7 +45,7 @@ exports.makeJournalList = function() {
     exports.create(article.journalInfo.journal.toJSON(), count, function(){
       article.processedJournal=true;
       article.save(function() {
-        exports.makeJournalList();
+        exports.makeJournalList(year);
       });
     });
   });

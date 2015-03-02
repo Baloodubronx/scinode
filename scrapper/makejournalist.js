@@ -3,4 +3,4 @@ var journals = require('./journals');
 
 mongoose.connect('mongodb://localhost/scrapper');
 
-journals.makeJournalList();
+journals.makeJournalList(2013);

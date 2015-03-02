@@ -17,7 +17,7 @@ var journals = require('../../journals');
 exports.create = function(articles, cb) {
   async.each(articles,
     function(item, callback){
-      if (item.journalInfo!==null) {
+      if (item.journalInfo!==null && item.journalInfo) {
         journals.create(item.journalInfo.journal, 0, function(){});
       }
       Article.findOne({'pmid': item.pmid}, function(err, article){
