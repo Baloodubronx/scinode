@@ -55,7 +55,6 @@ exports.addArticle = function(pmid, cb) {
   var link = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search/format=json&resulttype=core';
 	str='';
 	link += '&query='+pmid;
-  console.log('adding ' +pmid);
 	var getRequest = http.get(link, function(response) {
 		response.on('data', function (chunk) {
 			str += chunk;
@@ -65,7 +64,6 @@ exports.addArticle = function(pmid, cb) {
 			var json=JSON.parse(str);
       //console.log(json.resultList.result[0]);
 			exports.create(json.resultList.result[0], function(){
-        console.log('done '+pmid );
 				cb();
 			});
 		});
