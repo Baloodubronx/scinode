@@ -7,27 +7,25 @@
  * DELETE  /things/:id          ->  destroy
  */
 
-'use strict';
+
 
 var _ = require('lodash');
-var Article = require('./articles.model');
-var journals = require('../journals');
+var Article = require('../../../models/articles.model');
+var journals = require('../../journals');
 
 // Creates a new thing in the DB.
 exports.create = function(articles) {
-    articles.forEach(function(item){
-            if (item.journalInfo!=null) {
-              journals.create(item.journalInfo.journal); }
-      Article.findOne({'pmid': item.pmid}, function(err, article){
-        if (err) return done(err);
-        if (article) {
-          
-        }
-        else {
-          var newArticle  = new Article(item);
-          newArticle.save();
-        }
-      });
-
+  articles.forEach(function(item){
+    if (item.journalInfo!==null) {
+      journals.create(item.journalInfo.journal, 0, function(){});
+    }
+    Article.findOne({'pmid': item.pmid}, function(err, article){
+      if (err) return done(err);
+      if (!article) {
+        var newArticle  = new Article(item);
+        newArticle.save();
+      }
     });
+
+  });
 };

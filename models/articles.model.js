@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 
 // define the schema for our user model
 var articleSchema = mongoose.Schema({
-  processedKeywords : { type:Boolean, default:false, index:true },
-  processedAuthors : { type:Boolean, default:false, index:true },
-  processedJournal : { type:Boolean, default:false, index:true },
-  
+  processedKeywords : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
+  processedAuthors : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
+  processedJournal : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
+
   pmid  : { type: Number, index: {unique: true, dropDups: true}},
   title : String,
   authorString: String,
@@ -24,7 +24,7 @@ var articleSchema = mongoose.Schema({
     issue: String,
     volume: String,
     monthOfPublication: Number,
-    yearOfPublication: Number,
+    yearOfPublication: {type:Number, index:{unique:false, dropDups:false}},
     journal: {
       title: String,
       isoabbreviation: String,

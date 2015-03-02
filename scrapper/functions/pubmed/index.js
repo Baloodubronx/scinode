@@ -1,8 +1,8 @@
 http=require('http');
 
 articles=require('../articles');
-var Journal = require('../journals/journals.model');
-var Article = require('../articles/articles.model');
+var Journal = require('../../../models/journals.model');
+var Article = require('../../../models/articles.model');
 
 
 function getPMIDs(year, page) {
@@ -14,7 +14,7 @@ function getPMIDs(year, page) {
 		response.on('data', function (chunk) {
 			str += chunk;
 		});
-	
+
 		response.on('end', function () {
 			var json=JSON.parse(str);
 			articles.create(json.resultList.result);
@@ -22,11 +22,12 @@ function getPMIDs(year, page) {
         		console.log(count + ' journals in DB');
       		});
       		Article.find().count(function(err, count){
+
         		console.log(count + ' articles in DB');
+						getPMIDs(year, ++page);
       		});
-			getPMIDs(year, ++page);
 		});
-		
+
 	});
 
 	getRequest.on('error', function (err) {
