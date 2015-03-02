@@ -49,9 +49,8 @@ exports.makeJournalList = function(year) {
     console.time('create journal from infos');
     exports.create(article.journalInfo.journal.toJSON(), count, function(){
       console.timeEnd('create journal from infos');
-      article.processedJournal=true;
       console.time('save article');
-      article.save(function() {
+      Article.findOneAndUpdate({pmid:article.pmid}, {'processedJournal':true}, function(err){
         console.timeEnd('save article');
         exports.makeJournalList(year);
       });
