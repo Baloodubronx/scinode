@@ -1,9 +1,9 @@
 http=require('http');
 
 articles=require('../articles');
-var Journal = require('../journals/journals.model');
-var Article = require('../articles/articles.model');
-var Citation = require('../citations/citations.model');
+var Journal = require('../../../models/journals.model');
+var Article = require('../../../models/articles.model');
+var Citation = require('../../../models/citations.model');
 
 
 exports.authorCount = function () {
@@ -107,7 +107,7 @@ exports.citedCount = function(nb) {
 exports.cleanArticles = function() {
 	console.time('cleanArticles');
 
-	var q=Article.update({},{$set: {processed: false}}, {upsert: true, "new": false, multi:true});
+	var q=Article.update({},{$set: {processedJournal: false}}, {upsert: false, "new": false, multi:true});
 
 	q.exec(function(err, article){
 		Citation.remove({},function(){
