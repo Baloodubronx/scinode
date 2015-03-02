@@ -44,7 +44,9 @@ exports.makeJournalList = function(year) {
     }
     exports.create(article.journalInfo.journal.toJSON(), count, function(){
       article.processedJournal=true;
+      console.time('save article');
       article.save(function() {
+        console.timeEnd('save article');
         exports.makeJournalList(year);
       });
     });
