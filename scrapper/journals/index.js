@@ -33,8 +33,8 @@ exports.makeJournalList = function(year, articount) {
 			console.log('no more unprocessed articles FOR JOURNALS (year: '+year+')');
 			process.exit(code=1);
 		}
+    articount +=1;
     if (Math.floor(Math.random()*100)>95){
-      articount +=1;
       console.log(articount);
     }
 
