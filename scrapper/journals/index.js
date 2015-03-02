@@ -9,6 +9,7 @@ exports.create = function(journal, citations, year, callback) {
     if (journalfound) {
       journalfound.citedBy += citations;
       journalfound.articleCount +=1;
+      journalfound.ratio = journalfound.citedBy / journalfound.articleCount;
       journalfound.save(function(){
         callback();
       });
