@@ -17,15 +17,9 @@ function getPMIDs(year, page) {
 
 		response.on('end', function () {
 			var json=JSON.parse(str);
-			articles.create(json.resultList.result);
-			Journal.find().count(function(err, count){
-        		console.log(count + ' journals in DB');
-      		});
-      		Article.find().count(function(err, count){
-
-        		console.log(count + ' articles in DB');
-						getPMIDs(year, ++page);
-      		});
+			articles.create(json.resultList.result, function(){
+				getPMIDs(year, ++page);
+			});
 		});
 
 	});

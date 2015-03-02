@@ -8,24 +8,30 @@
  */
 
 
-
+var async = require('async');
 var _ = require('lodash');
 var Article = require('../../../models/articles.model');
 var journals = require('../../journals');
 
 // Creates a new thing in the DB.
-exports.create = function(articles) {
-  articles.forEach(function(item){
-    if (item.journalInfo!==null) {
-      journals.create(item.journalInfo.journal, 0, function(){});
-    }
-    Article.findOne({'pmid': item.pmid}, function(err, article){
-      if (err) return done(err);
-      if (!article) {
-        var newArticle  = new Article(item);
-        newArticle.save();
+exports.create = function(articles, cb) {
+  async.each(articles,
+    function(item, callback){
+      if (item.journalInfo!==null) {
+        journals.create(item.journalInfo.journal, 0, function(){});
       }
+      Article.findOne({'pmid': item.pmid}, function(err, article){
+        if (err) return done(err);
+        if (!article) {
+          var newArticle  = new Article(item);
+          newArticle.save(function(err){
+            callback();
+          });
+        }
+        else { callback();}
+      });
+    },
+    function(err) {
+      cb();
     });
-
-  });
 };
