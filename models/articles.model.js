@@ -2,10 +2,6 @@ var mongoose = require('mongoose');
 
 // define the schema for our user model
 var articleSchema = mongoose.Schema({
-  processedKeywords : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
-  processedAuthors : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
-  processedJournal : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
-
   pmid  : { type: Number, index: {unique: true, dropDups: true}},
   title : String,
   authorString: String,
@@ -37,9 +33,18 @@ var articleSchema = mongoose.Schema({
   isOpenAccess: String,
   citedByCount: Number,
   doi: String,
-  luceneScore: String
+  luceneScore: String,
+
+  processedKeywords : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
+  processedAuthors : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
+  processedJournal : { type:Boolean, default:false, index:{unique:false, dropDups:false}}
+
 } , { strict: true });
 
-// methods ======================
+// INDEXES
+
+articleSchema.index({ 'journalInfo.yearOfPublication': 1, 'processedAuthors': 1 });
+articleSchema.index({ 'journalInfo.yearOfPublication': 1, 'processedKeywords': 1 });
+articleSchema.index({ 'journalInfo.yearOfPublication': 1, 'processedJournal': 1 });
 
 module.exports = mongoose.model('Article', articleSchema);

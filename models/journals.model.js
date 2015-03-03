@@ -8,10 +8,14 @@ var journalSchema = mongoose.Schema({
   issn : String,
   isoabbreviation : String,
   nlmid: {type:String, index: { unique: true, dropDups: true }},
-  citedBy : {type:Number, default:0},
-  articleCount : {type:Number, default:1},
-  ratio : {type:Number, default:0}
+  journalYear : [
+    {
+      year : Number,
+      articleCount : {type:Number, default:1},
+      ratio : {type:Number, default:0},
+      citedBy : {type:Number, default:0}
+    }
+  ]
 } , { strict: false });
-
 
 module.exports = mongoose.model('Journal', journalSchema);
