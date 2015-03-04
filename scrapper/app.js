@@ -7,6 +7,7 @@ mongoose.connect('mongodb://localhost/scrapper');
 var inquirer = require('inquirer');
 var articles = require('./articles');
 var journals = require('./journals');
+var keywords = require('./keywords');
 
 start();
 
@@ -177,7 +178,7 @@ function stats() {
           //journalStats();
           break;
         case 'Keywords stats':
-          //journalStats();
+          keywordsStats();
           break;
         default:
           //journalStats();
@@ -215,10 +216,25 @@ function journalStats(year) {
     }
   });
 }
-/*
+
+
+function keywordsStats()
 {
-  type: "confirm",
-  name: "clean",
-  message: "Would you like to clean?"
+  inquirer.prompt([
+    {
+      type: "confirm",
+      name: "clean",
+      message: "Would you like to clean first? (Set all articles unprocessed, drop keywords base and reset count on whitelist)"
+    }
+  ],
+  function (answers) {
+    if (answers.clean) {
+      articles.unsetProcessed(2014, 'processedKeywords', function() {
+        keywords.reset(keywords.makelist);
+      });
+    }
+    else {
+      keywords.makelist();
+    }
+  });
 }
-*/

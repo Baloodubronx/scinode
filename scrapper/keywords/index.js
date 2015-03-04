@@ -1,21 +1,40 @@
-http=require('http');
+// KEYWORDS list generation in Scrapper
+/*
+	Functions list:
 
+		makelist()	: 	Make the list of keywords
+
+*/
+
+'use strict';
+
+var chalk = require('chalk');
+var error = chalk.bold.red;
+var info = chalk.bold.blue;
 var async=require('async');
 var _ = require('lodash');
 
-var Keyword = require('../../../server/api/keywords/keywords.model');
-var Blacklist = require('../../../server/api/blacklist/blacklist.model');
-var Whitelist = require('../../../server/api/whitelist/whitelist.model');
+var Keyword   = require('../../models/keywords.model');
+var Blacklist = require('../../models/blacklist.model');
+var Whitelist = require('../../models/whitelist.model');
+var Article 	= require('../../models/articles.model');
 
 
-var Article = require('../articles/articles.model');
+exports.reset = function(cb) {
+	console.log(info('resetting whitelist counts'));
+	Whitelist.update({}, {'count':0}, function(){
+		console.log(info('cleaning keywords list'));
+		Keyword.remove(cb);
+	});
+};
+
 
 exports.makelist = function () {
 	console.time('One article');
-	Article.findOne({'processed':false} , function(err, article){
+	Article.findOne({'journalInfo.yearOfPublication':2014, 'processedKeywords':false} , function(err, article){
 		if (!article) {
 			console.log('no more unprocessed articles');
-			process.exit(code=1);
+			process.exit();
 		}
 		console.log(article.pmid);
 
@@ -83,13 +102,13 @@ exports.makelist = function () {
 				],
 
 				// FINAL CALLBACK
-				function(err) {
+				function() {
 					callback();
 				});
 		  },
 
-		  function(err){
-		  	article.processed=true;
+		  function(){
+		  	article.processedKeywords=true;
 		  	article.save(function(){
 						console.timeEnd('One article');
 						exports.makelist();
