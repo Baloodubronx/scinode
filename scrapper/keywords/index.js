@@ -111,9 +111,23 @@ exports.makelist = function () {
 		  	article.processedKeywords=true;
 		  	article.save(function(){
 						console.timeEnd('One article');
-						exports.makelist();
+						exports.menage();
 					});
 		  }
 		);
 	});
+};
+
+exports.menage = function() {
+	Keyword.count({'count':1}, function(err, count){
+		if (count>500000) {
+			console.log(info('On fait le menage...'));
+			Keyword.remove({'count':1}, exports.makelist);
+		}
+		else {
+			exports.makelist();
+		}
+	});
+
+
 };
