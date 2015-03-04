@@ -6,7 +6,6 @@ var Article = require('../../../models/articles.model');
 
 
 exports.getPMIDs = function(year, page) {
-	console.time('get from pubmed');
 	var link = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search/format=json&resulttype=core';
 	str='';
 	link += '&query=PUB_YEAR:'+year+'&page='+page;
@@ -17,11 +16,9 @@ exports.getPMIDs = function(year, page) {
 		});
 
 		response.on('end', function () {
-			console.timeEnd('get from pubmed');
 			var json=JSON.parse(str);
-			console.time('Create article');
+
 			articles.create(json.resultList.result, function(){
-				console.timeEnd('Create article');
 				exports.getPMIDs(year, ++page);
 			});
 		});

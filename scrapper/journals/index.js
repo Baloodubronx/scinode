@@ -1,5 +1,8 @@
+var chalk = require('chalk');
+var error = chalk.bold.red;
+var info = chalk.bold.blue;
+
 var async = require('async');
-var _ = require('lodash');
 var Journal = require('../../models/journals.model');
 var Article = require('../../models/articles.model');
 
@@ -12,12 +15,12 @@ function updateCitation(jid, citations, year, callback) {
   );
 }
 
-function restoreJournals() {
+function restoreJournals(cb) {
   var years = [2010, 2011, 2012, 2013, 2014];
   async.eachSeries(
     years,
     function(item, callback){
-      console.log('updating ' + item);
+      console.log('restoring zeros for ' + item);
       Journal.update({},
       {
         $push : {
@@ -33,24 +36,39 @@ function restoreJournals() {
       callback
       );
     },
-    function(err) {
-      process.exit();
-    }
+    cb
   );
 }
 
 
-exports.cleanJournals = function() {
+exports.cleanJournals = function(cb) {
+  console.log('Cleaning journal.journalYear');
   Journal.update({},
     {
       $set : {
         'journalYear' : []
       }
     },
-    {multi:true}, function(err) {
-      console.log(err);
-      restoreJournals();
-    });
+    {multi:true}, function() {
+      restoreJournals(cb);
+    }
+
+  );
+};
+
+exports.cleanJournalsPerYear = function(year, cb) {
+  console.log('Cleaning journal.journalYear for '+year);
+  Journal.update({'journalYear.year':year},
+    {
+      $set : {
+        'journalYear.$.ratio' : 0,
+        'journalYear.$.citedBy' : 0,
+        'journalYear.$.articleCount' : 0,
+      }
+    },
+    {multi:true},
+    cb
+  );
 };
 
 exports.create = function(journal, citations, year, callback) {
@@ -80,19 +98,13 @@ exports.create = function(journal, citations, year, callback) {
   });
 };
 
-exports.clean = function() {
-
-};
-
-
-
 exports.makeJournalList = function(year, articount) {
-  var query = Article.findOne({'processedJournal':false, 'journalInfo.yearOfPublication':year}, function(err, article){
+  Article.findOne({'processedJournal':false, 'journalInfo.yearOfPublication':year}, function(err, article){
     if (!article) {
 			console.log('no more unprocessed articles FOR JOURNALS (year: '+year+')');
-			process.exit(code=1);
+			process.exit();
 		}
-    articount +=1;
+    articount +=-1;
     if (Math.floor(Math.random()*100)>95){
       console.log(articount);
     }
@@ -103,9 +115,19 @@ exports.makeJournalList = function(year, articount) {
     }
 
     exports.create(article.journalInfo.journal.toJSON(), count, year, function(){
-      Article.findOneAndUpdate({pmid:article.pmid}, {'processedJournal':true}, function(err){
+      Article.findOneAndUpdate({pmid:article.pmid}, {'processedJournal':true}, function(){
         exports.makeJournalList(year, articount);
       });
     });
   });
+};
+
+exports.unprocessedCount = function(year, cb) {
+  var error = chalk.bold.green;
+  Article.count({'processedJournal':false, 'journalInfo.yearOfPublication':year},
+    function(err, count) {
+      console.log(info("%s to be processed"), count);
+      cb(count);
+    }
+  );
 };

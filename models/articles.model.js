@@ -39,7 +39,7 @@ var articleSchema = mongoose.Schema({
   processedAuthors : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
   processedJournal : { type:Boolean, default:false, index:{unique:false, dropDups:false}}
 
-} , { strict: true });
+} , { strict: false });
 
 // INDEXES
 
