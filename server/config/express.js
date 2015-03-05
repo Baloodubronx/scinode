@@ -19,7 +19,7 @@ module.exports = function(app) {
   app.set('view engine', 'html');
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json({limit: '50mb'}));
-  app.use(require('connect-livereload')());
+  //app.use(require('connect-livereload')());
   app.use(methodOverride());
   console.log(path.join(config.root, 'client'));
   app.use(express.static(path.join(config.root, 'client')));
