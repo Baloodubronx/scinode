@@ -122,7 +122,7 @@ exports.menage = function() {
 	Keyword.count({'count':{$lt:4}}, function(err, count){
 		if (count>500000) {
 			console.log(info('On fait le menage...'));
-			Keyword.remove({'count':1}, exports.makelist);
+			Keyword.remove({'count':{$lt:4}}, exports.makelist);
 		}
 		else {
 			exports.makelist();

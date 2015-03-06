@@ -4,13 +4,8 @@ angular.module('scinodeApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('home', {
-        url: '/',
+        url: '/home',
         templateUrl: 'app/home/home.html',
-        controller: 'HomeCtrl'
-      })
-      .state('blacklist', {
-        url: '/bl',
-        templateUrl: 'app/home/bl.html',
         controller: 'HomeCtrl'
       });
   });

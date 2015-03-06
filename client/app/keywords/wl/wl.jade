@@ -1,0 +1,12 @@
+.navbar
+  a(ui-sref='keywords')
+    | Keywords
+  |  -  
+  a(ui-sref='bl')
+    | Blacklist
+.onesection
+  h1
+    | Whitelist {{whitelist.length}}
+  p(ng-repeat='keyword in whitelist')
+    a(href="", ng-click="removeFromWhitelist(keyword.keyword)")
+      | {{keyword.keyword}}

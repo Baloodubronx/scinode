@@ -14,7 +14,7 @@ require('./config/express')(app);
 require('./routes')(app);
 
 // Start server
-server.listen(process.env.PORT || 4444, function () {
+server.listen(8080, function () {
   console.log('Express server listening 4444');
 });
 

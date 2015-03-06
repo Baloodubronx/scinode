@@ -8,6 +8,7 @@ var inquirer = require('inquirer');
 var articles = require('./articles');
 var journals = require('./journals');
 var keywords = require('./keywords');
+var authors = require('./authors');
 
 start();
 
