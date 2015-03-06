@@ -1,5 +1,5 @@
-.first
+.onesection
   h1
     | Journals {{journals.length}}
   p(ng-repeat='journal in journals')
-    | {{journal.title}} : {{journal.citedBy}}
+    | {{$index+1}} : {{journal.title}} - [{{journal.journalYear[4].ratio}}]

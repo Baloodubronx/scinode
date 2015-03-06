@@ -1,9 +1,9 @@
 // KEYWORDS list generation in Scrapper
 /*
 	Functions list:
-
+		reset(cb)		: 	Remove ALL keywords, and Reset Count for Whitelist
 		makelist()	: 	Make the list of keywords
-
+		menage()		: 	Check is above 500.000 with Count Lower Than 7 -> if so, delete all the one with Count LT 4
 */
 
 'use strict';

@@ -1,5 +1,5 @@
 
-<div class="first">
+<div class="onesection">
   <h1>Journals {{journals.length}}</h1>
-  <p ng-repeat="journal in journals">{{journal.title}} : {{journal.citedBy}}</p>
+  <p ng-repeat="journal in journals">{{$index+1}} : {{journal.title}} - [{{journal.journalYear[4].ratio}}]</p>
 </div>

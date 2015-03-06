@@ -9,7 +9,7 @@ angular.module('scinodeApp')
   };
 
   $scope.getJournals = function() {
-    $http.get('api/journals').success(function(data){
+    $http.get('api/journals/year/2014').success(function(data){
       $scope.journals = data;
     });
   };
