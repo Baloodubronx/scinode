@@ -1,0 +1,5 @@
+.onesection
+  h1
+    | Authors {{authors.length}}
+  p(ng-repeat='author in authors')
+    | {{$index+1}} : {{author.fullName}} - [{{author.citationsYear[4].ratio}}]

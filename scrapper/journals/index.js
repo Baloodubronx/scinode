@@ -7,14 +7,6 @@ var Journal = require('../../models/journals.model');
 var Article = require('../../models/articles.model');
 
 
-function updateCitation(jid, citations, year, callback) {
-  Journal.findOneAndUpdate(
-    {_id: journalId, "journalYears.year": year},
-    { $inc: { "journalYears.$.count": 1 } },
-    callback
-  );
-}
-
 function restoreJournals(cb) {
   var years = [2010, 2011, 2012, 2013, 2014];
   async.eachSeries(

@@ -10,12 +10,13 @@ var journalSchema = mongoose.Schema({
   nlmid: {type:String, index: { unique: true, dropDups: true }},
   journalYear : [
     {
-      year : Number,
+      year : {type:Number, index: { unique: false }},
       articleCount : {type:Number, default:1},
-      ratio : {type:Number, default:0},
+      ratio : {type:Number, default:0, index: { unique: false }},
       citedBy : {type:Number, default:0}
     }
   ]
 } , { strict: false });
+
 
 module.exports = mongoose.model('Journal', journalSchema);

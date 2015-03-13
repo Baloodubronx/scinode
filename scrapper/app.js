@@ -176,7 +176,7 @@ function stats() {
           journalStats(answers.year);
           break;
         case 'Authors stats':
-          //journalStats();
+          authorsStats(answers.year);
           break;
         case 'Keywords stats':
           keywordsStats();
@@ -190,6 +190,31 @@ function stats() {
   );
 }
 
+function authorsStats(year) {
+  inquirer.prompt([
+    {
+      type: "confirm",
+      name: "clean",
+      message: "Would you like to clean first?"
+    }
+  ],
+  function (answers) {
+    if (answers.clean) {
+      authors.cleanAuthorsPerYear(year, function(){
+        articles.unsetProcessed(year || 2014, 'processedAuthors', function() {
+          authors.unprocessedCount(year || 2014, function(count){
+            authors.makeAuthorList(year || 2014, count);
+          });
+        });
+      });
+    }
+    else {
+      authors.unprocessedCount(year, function(count){
+        authors.makeAuthorList(year || 2014, count);
+      });
+    }
+  });
+}
 
 function journalStats(year) {
   inquirer.prompt([

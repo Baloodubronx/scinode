@@ -12,6 +12,7 @@ module.exports = function(app) {
   app.use('/api/blacklist', require('./api/blacklist'));
   app.use('/api/whitelist', require('./api/whitelist'));
   app.use('/api/journals', require('./api/journals'));
+  app.use('/api/authors', require('./api/authors'));
 
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
    .get();
