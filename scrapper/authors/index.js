@@ -68,6 +68,7 @@ exports.create = function(author, citations, year, callback) {
   Author.findOne({'fullName': author.fullName, 'citationsYear.year':year}, function(err, authorfound){
     if (err) return console.log(err);
     if (authorfound) {
+      //console.log(authorfound);
       authorfound.citationsYear[year-2010].citedBy += citations;
       authorfound.citationsYear[year-2010].articleCount +=1;
       authorfound.citationsYear[year-2010].ratio = authorfound.citationsYear[year-2010].citedBy / authorfound.citationsYear[year-2010].articleCount;
@@ -77,13 +78,14 @@ exports.create = function(author, citations, year, callback) {
     }
     else {
       var newAuthor  = new Author(author);
-      newAuthor.citationsYear = [
-        {year:2010, articleCount:1, ratio:0, citedBy:0},
-        {year:2011, articleCount:1, ratio:0, citedBy:0},
-        {year:2012, articleCount:1, ratio:0, citedBy:0},
-        {year:2013, articleCount:1, ratio:0, citedBy:0},
-        {year:2014, articleCount:1, ratio:0, citedBy:0}
-      ];
+      for (var tempy = 2010; tempy < 2015; tempy++) {
+        if (tempy===year) {
+          newAuthor.citationsYear.push({year:tempy, articleCount:1, ratio:citations, citedBy:citations});
+        }
+        else {
+          newAuthor.citationsYear.push({year:tempy, articleCount:0, ratio:0, citedBy:0});
+        }
+      }
       newAuthor.save(function(err){
         if (err) console.log(error(err));
         callback();

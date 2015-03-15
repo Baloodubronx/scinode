@@ -7,8 +7,15 @@ angular.module('scinodeApp')
       url: '/bl',
       templateUrl: 'app/keywords/bl/bl.html',
       controller: 'BlCtrl'
+    })
+    .state('bl2', {
+      url: '/bl/bl',
+      templateUrl: 'app/keywords/bl/bl2.html',
+      controller: 'BlCtrl'
     });
 })
+
+
 .controller( 'BlCtrl', function BlCtrl($scope, $http) {
   $scope.blacklist = [];
 
