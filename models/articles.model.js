@@ -35,6 +35,10 @@ var articleSchema = mongoose.Schema({
   doi: String,
   luceneScore: String,
 
+  keywordList: {
+    keyword: [ String ]
+  },
+
   processedKeywords : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
   processedAuthors : { type:Boolean, default:false, index:{unique:false, dropDups:false}},
   processedJournal : { type:Boolean, default:false, index:{unique:false, dropDups:false}}
