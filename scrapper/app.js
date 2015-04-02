@@ -256,7 +256,8 @@ function keywordsStats()
   function (answers) {
     if (answers.clean) {
       articles.unsetProcessed(2014, 'processedKeywords', function() {
-        keywords.reset(keywords.makelist);
+        //keywords.reset(keywords.makelist);
+        keywords.makelistBis();
       });
     }
     else {

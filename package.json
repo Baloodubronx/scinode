@@ -58,7 +58,8 @@
       "jQuery": false,
       "$": false,
       "CollectionModalCtrl": false,
-      "ArticleModalCtrl": false
+      "ArticleModalCtrl": false,
+      "require":false
     }
   }
 }

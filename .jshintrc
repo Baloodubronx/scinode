@@ -1,0 +1,15 @@
+{"latedef": "nofunc",
+"strict": false,
+"node": true,
+"undef": true,
+"unused": true,
+"globals": {
+  "angular": false,
+  "dummy": false,
+  "jQuery": false,
+  "$": false,
+  "CollectionModalCtrl": false,
+  "ArticleModalCtrl": false,
+  "require":false
+}
+}

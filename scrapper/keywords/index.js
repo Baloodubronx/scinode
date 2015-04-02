@@ -9,12 +9,13 @@
 'use strict';
 
 var chalk = require('chalk');
-var error = chalk.bold.red;
+//var error = chalk.bold.red;
 var info = chalk.bold.blue;
 var async=require('async');
 var _ = require('lodash');
 
 var Keyword   = require('../../models/keywords.model');
+var KeywordBis   = require('../../models/keywordsbis.model');
 var Blacklist = require('../../models/blacklist.model');
 var Whitelist = require('../../models/whitelist.model');
 var Article 	= require('../../models/articles.model');
@@ -117,6 +118,53 @@ exports.makelist = function () {
 		);
 	});
 };
+
+// NEW VERSION OF MAKELIST
+//
+exports.makelistBis = function () {
+	console.time('One article');
+	Article.findOne({'journalInfo.yearOfPublication':2014, 'processedKeywords':false} , function(err, article){
+		if (!article) {
+			console.log('no more unprocessed articles');
+			process.exit();
+		}
+		console.log(article.pmid);
+
+		// MAKE THE ARRAY OF KEYWORDS; PREFERENCE FOR 3 WORDS, THEN 2 WORDS, THEN 1 WORD
+		var finalarray = article.keywordList.keyword;
+
+		async.each(finalarray,
+		  function(term, callback){
+				term = term.toLowerCase();
+				if (term==='') callback();
+				KeywordBis.findOne({'keyword':term},
+					function(err, keyword){
+		    		if (keyword) {
+				    	keyword.count += 1;
+				    	keyword.save(function(){
+				    		callback(null);
+	    				});
+		    		}
+				    else {
+		    			var newKey = new KeywordBis({keyword:term, count:1});
+			    		newKey.save(function(){
+			    			callback(null);
+			    		});
+			    	}
+				  });
+				},
+
+		  function(){
+		  	article.processedKeywords=true;
+		  	article.save(function(){
+					console.timeEnd('One article');
+					exports.makelistBis();
+				});
+		  }
+		);
+	});
+};
+
 
 exports.menage = function() {
 	Keyword.count({'count':{$lt:7}}, function(err, count){
